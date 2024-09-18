@@ -1,9 +1,8 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
 import Cadastro from '../pages/Cadastro.vue';
-import Voo from '../pages/Voo.vue';
-import Right from '../pages/Right.vue';
-
+import Home from '../pages/Home.vue';
+import Editar from '../pages/Editar.vue';
 const routes = [
   {
     path: '/Cadastro',
@@ -11,14 +10,14 @@ const routes = [
     component: Cadastro,
   },
   {
-    path: '/Voo',
-    name: 'Voo',
-    component: Voo,
+    path: '/edit',
+    name: 'Editar Voô',
+    component: Editar,
   },
   {
-    path: '/Right',
-    name: 'Right',
-    component: Right,
+    path: '/',
+    name: 'Home',
+    component: Home,
   },
 ];
 

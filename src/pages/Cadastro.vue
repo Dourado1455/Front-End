@@ -1,82 +1,85 @@
 <template>
-<div class="center">
-<div class="text-container">
-    <h1>CADASTRO</h1>
-   
-  </div>
-<form>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Nomenpm </label>
-    <input type="name" class="form-control" id="Name">
+  <div class="container">
+    <h1>Cadastro de voôs</h1>
+    <form class="form-cadastro" @submit.prevent="createVoo">
+      <div class="mb-3">
+        <label for="codigoVoo" class="form-label">Código do Voo</label>
+        <input type="text" class="form-control" v-model="novoVoo.codigo_voo" id="codigoVoo" />
       </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Local de Partida </label>
-    <input type="name" class="form-control" id="Cidade">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Local de Destino </label>
-    <input type="name" class="form-control" id="Cidade">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Data de Vôo</label>
-    <input type="date" class="form-control" id="Name">
+      <div class="mb-3">
+        <label for="origemCidade" class="form-label">Local de Partida (Cidade)</label>
+        <input type="text" class="form-control" v-model="novoVoo.origem_cidade" id="origemCidade" />
       </div>
-  <button type="submit" class="btn-primary">Confirmar</button>
-  
-    <div>Nunca compartilharemos seus dados com ninguém.</div>
-</form>
-</div>
-
+      <div class="mb-3">
+        <label for="destinoCidade" class="form-label">Local de Destino (Cidade)</label>
+        <input type="text" class="form-control" v-model="novoVoo.destino_cidade" id="destinoCidade" />
+      </div>
+      <div class="mb-3">
+        <label for="dataVoo" class="form-label">Data de Vôo</label>
+        <input type="date" class="form-control" v-model="novoVoo.data" id="dataVoo" />
+      </div>
+      <div class="buttons">
+        <router-link to="/">
+          <button class="btn btn-danger">Voltar</button>
+        </router-link>
+        <button type="submit" class="btn btn-primary">Confirmar</button>
+      </div>
+      <div>Nunca compartilharemos seus dados com ninguém.</div>
+    </form>
+  </div>
 </template>
 
-<script>
 
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+    novoVoo: {
+      codigo_voo: '',
+      origem_cidade: '',
+      destino_cidade: '',
+      data: ''
+      }
+    };
+  },
+  methods: {
+    async createVoo() {
+  try {
+    await axios.post('/api/voos/create', this.novoVoo);
+    this.novoVoo = { codigo_voo: '', origem_cidade: '', destino_cidade: '', data: '' }; // Limpa o formulário
+    this.fetchVoos(); // Atualiza a lista de voos
+  } catch (error) {}
+    
+    }
+  } 
+};
 </script>
 
 <style scoped>
-.center {
+/* Estilos */
+</style>
+
+
+<script></script>
+
+<style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-max-width: 500px;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-}
-.text-container{
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 15px;
-  color:rgb(0, 0, 0);
-  padding: 10px;
-  text-align: center;
-  font-weight: bold;
-  text-align: center;
-  
-}
-.mb-3 {
-  width: 100%;
-max-width: 500px;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-};
-
-.btn-primary{
-  background-color: #cf9f57;
-    background-size: 50rem;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    margin-right: 8px; 
-    font-size: 14px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    
+  align-items: center;
+  justify-content: center;
+  padding: 10rem;
+  height: 100vh;
+  background: #dee8fd;
 }
 
-
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 9px;
+}
 </style>
